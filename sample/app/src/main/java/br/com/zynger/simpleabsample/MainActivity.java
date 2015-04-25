@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import br.com.zynger.simpleab.ABTestPerformer;
+import br.com.zynger.simpleab.ABTestVariant;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -14,7 +17,35 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView textView = (TextView) findViewById(R.id.main_text);
+        final TextView textView = (TextView) findViewById(R.id.main_text);
+
+        ABTestPerformer performer = new ABTestPerformer();
+
+        TextViewBackgroundTest abTest = new TextViewBackgroundTest(performer, new ABTestVariant() {
+            @Override
+            public void perform() {
+                int color = getResources().getColor(android.R.color.holo_red_dark);
+                textView.setBackgroundColor(color);
+            }
+
+            @Override
+            public String getId() {
+                return "A";
+            }
+        }, new ABTestVariant() {
+            @Override
+            public void perform() {
+                int color = getResources().getColor(android.R.color.holo_green_dark);
+                textView.setBackgroundColor(color);
+            }
+
+            @Override
+            public String getId() {
+                return "B";
+            }
+        });
+
+        abTest.perform();
     }
 
     @Override
