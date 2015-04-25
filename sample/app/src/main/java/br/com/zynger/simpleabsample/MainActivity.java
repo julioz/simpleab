@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import br.com.zynger.simpleab.ABTestPerformer;
 import br.com.zynger.simpleab.ABTestVariant;
+import br.com.zynger.simpleabsample.ab.button.ButtonBackgroundTest;
+import br.com.zynger.simpleabsample.ab.button.ButtonTestVariant;
+import br.com.zynger.simpleabsample.ab.textview.TextViewBackgroundTest;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -31,7 +34,42 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void performButtonTest(ABTestPerformer performer) {
+        ButtonBackgroundTest abTest = new ButtonBackgroundTest(performer,
+                new ButtonTestVariant() {
 
+                    @Override
+                    public float getWeight() {
+                        return 20;
+                    }
+
+                    @Override
+                    public void perform() {
+                        mButton.setText("This is the less weighted variant");
+                    }
+
+                    @Override
+                    public String getId() {
+                        return "Less-weight";
+                    }
+                },
+                new ButtonTestVariant() {
+                    @Override
+                    public float getWeight() {
+                        return 80;
+                    }
+
+                    @Override
+                    public void perform() {
+                        mButton.setText("This is the MOST weighted variant");
+                    }
+
+                    @Override
+                    public String getId() {
+                        return "More weight";
+                    }
+                });
+
+        abTest.perform();
     }
 
     private void performTextViewTest(ABTestPerformer performer) {

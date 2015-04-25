@@ -1,4 +1,4 @@
-package br.com.zynger.simpleabsample;
+package br.com.zynger.simpleabsample.ab.textview;
 
 import br.com.zynger.simpleab.ABTestPerformer;
 import br.com.zynger.simpleab.ABTestVariant;
