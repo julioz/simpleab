@@ -27,6 +27,12 @@ public abstract class AbstractABTest<I> {
                 throw new IllegalArgumentException("You cannot define an ABTestVariant" +
                         " with a null ID!");
             }
+
+            if (mVariantsMap.containsKey(variantId)) {
+                throw new IllegalArgumentException("You cannot define ABTestVariants" +
+                        " with equal IDs!");
+            }
+
             this.mVariantsMap.put(variant.getId(), variant);
         }
 
