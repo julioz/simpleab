@@ -36,7 +36,11 @@ public abstract class AbstractABTest<I> {
             this.mVariantsMap.put(variant.getId(), variant);
         }
 
-        mPerformer.registerTest(this);
+        registerTest(mPerformer);
+    }
+
+    public void registerTest(ABTestPerformer performer) {
+        performer.registerTest(this);
     }
 
     public void perform() {

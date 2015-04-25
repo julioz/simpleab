@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SimpleAB Sample</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="default_drawer">Default drawer</string>
+    <string name="weighted_drawer">Weighted drawer</string>
     <string name="action_settings">Settings</string>
 </resources>

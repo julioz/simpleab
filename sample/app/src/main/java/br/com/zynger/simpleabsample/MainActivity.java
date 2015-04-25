@@ -43,6 +43,17 @@ public class MainActivity extends ActionBarActivity {
             public String getId() {
                 return "B";
             }
+        }, new ABTestVariant() {
+            @Override
+            public void perform() {
+                int color = getResources().getColor(android.R.color.holo_blue_bright);
+                textView.setBackgroundColor(color);
+            }
+
+            @Override
+            public String getId() {
+                return "C";
+            }
         });
 
         abTest.perform();
