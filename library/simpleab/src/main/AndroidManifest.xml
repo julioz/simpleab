@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="br.com.zynger.simpleab">
+
+    <application android:allowBackup="true">
+
+    </application>
+
+</manifest>
