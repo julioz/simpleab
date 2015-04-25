@@ -16,7 +16,7 @@ public abstract class AbstractABTest<I> {
         this.mPerformer = performer;
 
         if (variants == null || variants.length < 2) {
-            throw new IllegalArgumentException("You cannot define an ABTestVariant" +
+            throw new IllegalArgumentException("You cannot define an ABTest" +
                     " with less than two variants!");
         }
 
