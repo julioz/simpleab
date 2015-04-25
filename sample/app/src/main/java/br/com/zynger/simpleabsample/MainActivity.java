@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import br.com.zynger.simpleab.ABTestPerformer;
@@ -12,20 +13,33 @@ import br.com.zynger.simpleab.ABTestVariant;
 
 public class MainActivity extends ActionBarActivity {
 
+    private TextView mTextView;
+    private Button mButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView textView = (TextView) findViewById(R.id.main_text);
+        mTextView = (TextView) findViewById(R.id.main_text);
+        mButton = (Button) findViewById(R.id.main_button);
 
         ABTestPerformer performer = new ABTestPerformer();
 
+        performTextViewTest(performer);
+        performButtonTest(performer);
+    }
+
+    private void performButtonTest(ABTestPerformer performer) {
+
+    }
+
+    private void performTextViewTest(ABTestPerformer performer) {
         TextViewBackgroundTest abTest = new TextViewBackgroundTest(performer, new ABTestVariant() {
             @Override
             public void perform() {
                 int color = getResources().getColor(android.R.color.holo_red_dark);
-                textView.setBackgroundColor(color);
+                mTextView.setBackgroundColor(color);
             }
 
             @Override
@@ -36,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void perform() {
                 int color = getResources().getColor(android.R.color.holo_green_dark);
-                textView.setBackgroundColor(color);
+                mTextView.setBackgroundColor(color);
             }
 
             @Override
@@ -47,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void perform() {
                 int color = getResources().getColor(android.R.color.holo_blue_bright);
-                textView.setBackgroundColor(color);
+                mTextView.setBackgroundColor(color);
             }
 
             @Override
