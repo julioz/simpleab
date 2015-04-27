@@ -7,10 +7,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-import br.com.zynger.simpleab.ABTestPerformer;
 import br.com.zynger.simpleab.ABTestVariant;
+import br.com.zynger.simpleab.SimpleAB;
 import br.com.zynger.simpleabsample.ab.button.ButtonBackgroundTest;
 import br.com.zynger.simpleabsample.ab.button.ButtonTestVariant;
+import br.com.zynger.simpleabsample.ab.button.WeightedTestDrawer;
 import br.com.zynger.simpleabsample.ab.textview.TextViewBackgroundTest;
 
 
@@ -27,14 +28,12 @@ public class MainActivity extends ActionBarActivity {
         mTextView = (TextView) findViewById(R.id.main_text);
         mButton = (Button) findViewById(R.id.main_button);
 
-        ABTestPerformer performer = new ABTestPerformer();
-
-        performTextViewTest(performer);
-        performButtonTest(performer);
+        SimpleAB.with(this).perform(getTextViewTest()).now();
+        SimpleAB.with(this).perform(getButtonTest()).withDrawer(new WeightedTestDrawer()).now();
     }
 
-    private void performButtonTest(ABTestPerformer performer) {
-        ButtonBackgroundTest abTest = new ButtonBackgroundTest(performer,
+    private ButtonBackgroundTest getButtonTest() {
+        return new ButtonBackgroundTest(
                 new ButtonTestVariant() {
 
                     @Override
@@ -68,12 +67,10 @@ public class MainActivity extends ActionBarActivity {
                         return "More weight";
                     }
                 });
-
-        abTest.perform();
     }
 
-    private void performTextViewTest(ABTestPerformer performer) {
-        TextViewBackgroundTest abTest = new TextViewBackgroundTest(performer, new ABTestVariant() {
+    private TextViewBackgroundTest getTextViewTest() {
+        return new TextViewBackgroundTest(new ABTestVariant() {
             @Override
             public void perform() {
                 int color = getResources().getColor(android.R.color.holo_red_dark);
@@ -107,8 +104,6 @@ public class MainActivity extends ActionBarActivity {
                 return "C";
             }
         });
-
-        abTest.perform();
     }
 
     @Override
