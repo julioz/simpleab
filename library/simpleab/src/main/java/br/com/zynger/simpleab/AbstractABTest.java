@@ -8,12 +8,10 @@ import java.util.HashMap;
 public abstract class AbstractABTest<I> {
 
     private I mIdentifier;
-    private final ABTestPerformer mPerformer;
     private HashMap<Object, ABTestVariant> mVariantsMap;
 
-    public AbstractABTest(I identifier, ABTestPerformer performer, ABTestVariant... variants) {
+    public AbstractABTest(I identifier, ABTestVariant... variants) {
         this.mIdentifier = identifier;
-        this.mPerformer = performer;
 
         if (variants == null || variants.length < 2) {
             throw new IllegalArgumentException("You cannot define an ABTest" +
@@ -35,19 +33,9 @@ public abstract class AbstractABTest<I> {
 
             this.mVariantsMap.put(variant.getId(), variant);
         }
-
-        registerTest(mPerformer);
     }
 
-    public void registerTest(ABTestPerformer performer) {
-        performer.registerTest(this);
-    }
-
-    public void perform() {
-        mPerformer.perform(this);
-    }
-
-    public I getIdentifier() {
+    public I getId() {
         return mIdentifier;
     }
 
