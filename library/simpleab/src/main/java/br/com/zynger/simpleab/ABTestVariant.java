@@ -3,8 +3,8 @@ package br.com.zynger.simpleab;
 /**
  * Created by Julio on 25/4/2015.
  */
-public interface ABTestVariant<I> {
+public interface ABTestVariant {
 
     void perform();
-    I getId();
+    String getId();
 }

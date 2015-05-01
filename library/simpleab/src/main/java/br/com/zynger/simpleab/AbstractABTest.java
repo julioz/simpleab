@@ -5,12 +5,12 @@ import java.util.HashMap;
 /**
  * Created by Julio on 25/4/2015.
  */
-public abstract class AbstractABTest<I> {
+public abstract class AbstractABTest {
 
-    private I mIdentifier;
-    private HashMap<Object, ABTestVariant> mVariantsMap;
+    private String mIdentifier;
+    private HashMap<String, ABTestVariant> mVariantsMap;
 
-    public AbstractABTest(I identifier, ABTestVariant... variants) {
+    public AbstractABTest(String identifier, ABTestVariant... variants) {
         this.mIdentifier = identifier;
 
         if (variants == null || variants.length < 2) {
@@ -20,7 +20,7 @@ public abstract class AbstractABTest<I> {
 
         this.mVariantsMap = new HashMap<>();
         for (ABTestVariant variant : variants) {
-            Object variantId = variant.getId();
+            String variantId = variant.getId();
             if (variantId == null) {
                 throw new IllegalArgumentException("You cannot define an ABTestVariant" +
                         " with a null ID!");
@@ -35,11 +35,15 @@ public abstract class AbstractABTest<I> {
         }
     }
 
-    public I getId() {
+    public String getId() {
         return mIdentifier;
     }
 
-    public HashMap<Object, ABTestVariant> getVariantsMap() {
+    public HashMap<String, ABTestVariant> getVariantsMap() {
         return mVariantsMap;
+    }
+
+    public ABTestVariant getVariantById(String variantId) {
+        return mVariantsMap.get(variantId);
     }
 }
