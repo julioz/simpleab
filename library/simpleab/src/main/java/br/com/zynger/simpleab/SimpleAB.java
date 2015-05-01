@@ -9,16 +9,14 @@ import br.com.zynger.simpleab.drawer.DefaultTestDrawer;
  * Created by Julio on 25/4/2015.
  */
 public class SimpleAB {
-
     static volatile SimpleAB sSingleton = null;
-    final Context mContext;
 
+    private final TestPersister mTestPersister;
     private DefaultTestDrawer mDefaultTestDrawer;
 
     SimpleAB(Context context) {
-        mContext = context;
-
         mDefaultTestDrawer = new DefaultTestDrawer();
+        mTestPersister = new TestPersister(context);
     }
 
     public static SimpleAB with(Context context) {
@@ -41,7 +39,12 @@ public class SimpleAB {
             drawer = mDefaultTestDrawer;
         }
 
-        ABTestVariant variant = drawer.draw(test);
+        ABTestVariant variant = mTestPersister.getPersistedVariant(test);
+        if (variant == null) {
+            variant = drawer.draw(test);
+            mTestPersister.persistVariant(test, variant);
+        }
+
         variant.perform();
 
         if (listener != null) {
