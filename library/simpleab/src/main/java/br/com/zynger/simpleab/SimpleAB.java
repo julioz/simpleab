@@ -14,6 +14,8 @@ public class SimpleAB {
     private final TestPersister mTestPersister;
     private DefaultTestDrawer mDefaultTestDrawer;
 
+    private static boolean sAlwaysDrawVariants = false;
+
     SimpleAB(Context context) {
         mDefaultTestDrawer = new DefaultTestDrawer();
         mTestPersister = new TestPersister(context);
@@ -40,7 +42,7 @@ public class SimpleAB {
         }
 
         ABTestVariant variant = mTestPersister.getPersistedVariant(test);
-        if (variant == null) {
+        if (sAlwaysDrawVariants || variant == null) {
             variant = drawer.draw(test);
             mTestPersister.persistVariant(test, variant);
         }
@@ -50,6 +52,10 @@ public class SimpleAB {
         if (listener != null) {
             listener.onTestPerformed(test, variant);
         }
+    }
+
+    public void alwaysDrawVariants() {
+        sAlwaysDrawVariants = true;
     }
 
     public static class Builder {
