@@ -6,7 +6,7 @@ import br.com.zynger.simpleab.AbstractABTest;
 /**
  * Created by Julio on 25/4/2015.
  */
-public class TextViewBackgroundTest extends AbstractABTest<String> {
+public class TextViewBackgroundTest extends AbstractABTest {
 
     private final static String TEST_ID = TextViewBackgroundTest.class.getSimpleName();
 

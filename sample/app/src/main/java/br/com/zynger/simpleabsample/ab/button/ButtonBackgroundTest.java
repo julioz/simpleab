@@ -5,7 +5,7 @@ import br.com.zynger.simpleab.AbstractABTest;
 /**
  * Created by Julio on 25/4/2015.
  */
-public class ButtonBackgroundTest extends AbstractABTest<String> {
+public class ButtonBackgroundTest extends AbstractABTest {
 
     private final static String TEST_ID = ButtonBackgroundTest.class.getSimpleName();
 
