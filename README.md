@@ -8,13 +8,13 @@ SimpleAB will make A/B tests as easy to run as to write a one-liner like:
 ```java
 SimpleAB.with(context).perform(abTest).now();
 ```
-
+- - - 
 Usage
 --------
 
 #### Defining Tests
 
-A test is defined through an ID (any `Object` you would like, like `String`s or even `Enum`s) by a class extending `AbstractABTest`:
+A test is defined through an ID by a class extending `AbstractABTest`:
 ```java
 AbstractABTest firstTest = new MyFirstABTest(new ABTestVariant() {
   @Override
@@ -38,7 +38,7 @@ AbstractABTest firstTest = new MyFirstABTest(new ABTestVariant() {
 ```
 
 Note that you can define as many variants as you want, as long as you define different IDs for them.
-The IDs, by themselves can be anything that you want, from `String`s to custom objects, as long as they are not `equals()`.
+The IDs, by themselves can be any `String` you want, as long as they are not `equals()`.
 
 #### Drawers
 
@@ -48,14 +48,25 @@ If you want, you can also define your own class that `implements ABTestDrawer`. 
 
 #### Listener for callback
 
-It's also optional to define an `ABTestListener` so you can have a callback after a variant is drawn. To do that, simply define a class that implements the interface and override its methods. The callback method will be executed after the A/B test runs. This way, you can perform any subsequent task to the test, like `POST`-ing the result to a server or saving which variant was chosen in `SharedPreferences`, for example.
+It's also optional to define an `ABTestListener` so you can have a callback after a variant is drawn. To do that, simply define a class that implements the interface and override its methods. The callback method will be executed after the A/B test runs. This way, you can perform any subsequent task to the test, like `POST`-ing the result to a server, for example.
 
 The API will then be something like:
 ```java
 SimpleAB.with(context).perform(abTest).withDrawer(variantDrawer).listener(listener).now();
 ```
 
+#### Persistence of chosen variants
 
+By default, the library persists the chosen variants in `SharedPreferences`. This way, once your app runs for the first time and the variants are chosen by the `Drawer`, the app state regarding your A/B tests will stay the same for the subsequent runs (unless the user *`clears app data`*).
+
+#### Debugging
+
+If you are debugging your application and want to avoid the need to clear the app data to re-draw your A/B tests variants, you can simply call
+```java
+SimpleAB.with(this).alwaysDrawVariants();
+```
+before performing your A/B tests. This will bypass the persisting step of the library, and by that, the system will always `draw()` variants based on your `Drawer`.
+- - - 
 Download
 --------
 
