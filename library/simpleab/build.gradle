@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.robolectric'
 
 android {
     compileSdkVersion 22
@@ -10,6 +11,11 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    sourceSets {
+        androidTest.setRoot('src/test')
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,4 +27,74 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
+
+
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.hamcrest:hamcrest-integration:1.3'
+    testCompile 'org.hamcrest:hamcrest-core:1.3'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+    testCompile('junit:junit:4.+') {
+        exclude module: 'hamcrest-core'
+    }
+    testCompile('org.robolectric:robolectric:3.0-rc2') {
+        exclude module: 'classworlds'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'support-v4'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-provider-api'
+    }
+}
+
+robolectric {
+    // configure the set of classes for JUnit tests
+    include '**/*Test.class' //Make sure you call all your test classes according to this expression!!!
+
+    // configure max heap size of the test JVM
+    maxHeapSize = "2048m"
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+def coverageSourceDirs = [
+        '../app/src/main/java'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: '../app/build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('../app/build/jacoco/testDebug.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
 }
