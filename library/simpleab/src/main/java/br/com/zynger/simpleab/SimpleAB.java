@@ -12,13 +12,13 @@ public class SimpleAB {
     static volatile SimpleAB sSingleton = null;
 
     private final TestPersister mTestPersister;
-    private DefaultTestDrawer mDefaultTestDrawer;
+    private ABTestDrawer mDefaultTestDrawer;
 
     private static boolean sAlwaysDrawVariants = false;
 
-    SimpleAB(Context context) {
-        mDefaultTestDrawer = new DefaultTestDrawer();
-        mTestPersister = new TestPersister(context);
+    SimpleAB(ABTestDrawer defaultTestDrawer, TestPersister testPersister) {
+        mDefaultTestDrawer = defaultTestDrawer;
+        mTestPersister = testPersister;
     }
 
     public static SimpleAB with(Context context) {
@@ -70,8 +70,9 @@ public class SimpleAB {
 
         public SimpleAB build() {
             Context context = this.mContext;
-
-            return new SimpleAB(context);
+            ABTestDrawer defaultDrawer = new DefaultTestDrawer();
+            TestPersister persister = new TestPersister(context);
+            return new SimpleAB(defaultDrawer, persister);
         }
     }
 }
