@@ -12,7 +12,6 @@ import br.com.zynger.simpleab.drawer.DefaultTestDrawer;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -50,13 +49,9 @@ public class SimpleABTest {
         assertNotNull(mSimpleAB);
     }
 
-    @Test
-    public void builderInvalidContext() throws Exception {
-        try {
-            new SimpleAB.Builder(null);
-            fail("Null context should throw exception.");
-        } catch (IllegalArgumentException expected) {
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void builderInvalidContext() {
+        new SimpleAB.Builder(null);
     }
 
     @Test
