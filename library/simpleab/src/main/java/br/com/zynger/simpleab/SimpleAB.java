@@ -1,6 +1,8 @@
 package br.com.zynger.simpleab;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import br.com.zynger.simpleab.drawer.ABTestDrawer;
 import br.com.zynger.simpleab.drawer.DefaultTestDrawer;
@@ -71,7 +73,9 @@ public class SimpleAB {
         public SimpleAB build() {
             Context context = this.mContext;
             ABTestDrawer defaultDrawer = new DefaultTestDrawer();
-            TestPersister persister = new TestPersister(context);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            TestPersister persister = new TestPersister(sharedPreferences);
             return new SimpleAB(defaultDrawer, persister);
         }
     }

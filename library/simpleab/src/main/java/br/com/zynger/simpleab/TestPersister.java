@@ -1,8 +1,6 @@
 package br.com.zynger.simpleab;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 /**
  * Created by Julio on 1/5/2015.
@@ -13,8 +11,13 @@ public class TestPersister {
 
     private final SharedPreferences mSharedPreferences;
 
-    TestPersister(Context context) {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    TestPersister(SharedPreferences sharedPreferences) {
+        if (sharedPreferences == null) {
+            throw new IllegalArgumentException("You cannot initiate a TestPersister " +
+                    "by passing null shared preferences instance!");
+        }
+
+        mSharedPreferences = sharedPreferences;
     }
 
     public void persistVariant(AbstractABTest test, ABTestVariant variant) {
